@@ -1,0 +1,49 @@
+package LinkedList;
+
+import java.util.Scanner;
+
+public class Delete_Front {
+
+	public static Node insert(Node head,int data) {
+			Node newNode = new Node(data);
+			Node current= head;
+			if(current==null) {
+				head=newNode;
+			}
+			else {
+			while(current.next!=null) {
+				current=current.next;
+			}
+			current.next=newNode;
+			
+			}
+			return head;
+		}
+	public static void display(Node head) {
+			Node current = head;
+			while(current!=null) {
+				System.out.println(current.data);
+				current=current.next;
+			}
+			
+		}
+	private static Node delete_Front(Node head) {
+		Node current = head;
+		current=current.next;
+		head= current;
+		return head;
+	}
+	
+		public static void main(String[] args) {
+			Scanner sc = new Scanner(System.in);
+			int n= sc.nextInt();
+			Node head=null;
+			for(int i=0;i<n;i++) {
+				int data= sc.nextInt();
+				head=insert(head,data);
+			}
+			head= delete_Front(head);
+			display(head);
+		}
+		
+}
