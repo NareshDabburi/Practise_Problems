@@ -1,0 +1,164 @@
+package Trees;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Stack;
+
+class TreeNode{
+	int data;
+	TreeNode left;
+	TreeNode right;
+	
+	TreeNode(int data){
+		this.data=data;
+		this.left=null;
+		this.right=null;
+	}
+}
+public class insert {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		TreeNode root=null;
+		for(int i=0;i<n;i++) {
+			int data= sc.nextInt();
+			root=insert(root,data);		
+		}
+		System.out.println("Inorder");
+		display_inorder_recursion(root);
+		display_inorder_iterative(root);
+		System.out.println("Preorder");
+		display_preorder_recursion(root);
+		display_preorder_iterative(root);
+		System.out.println("Postorder");
+		display_postorder_recursion(root);
+		display_postorder_iterative(root);
+		
+
+	}
+	
+	private static TreeNode insert(TreeNode root,int data) {
+		TreeNode current = root;
+		TreeNode newNode = new TreeNode(data);
+		if(root==null) {
+			return newNode;
+		}
+		TreeNode temp=null;
+		while(current!=null) {
+			temp=current;
+			if(current.data<data) {
+				current=current.right;
+			}else if(current.data>data) {
+				current=current.left;
+			}
+		}
+		
+		if(temp.data<data) {
+			temp.right=newNode;
+		}
+		else if(temp.data>data) {
+			temp.left=newNode;
+		}
+		return root;
+	}
+	
+	private static void display_inorder_recursion(TreeNode root) {
+		if(root==null) {
+			return;
+		}
+		display_inorder_recursion(root.left);
+		System.out.println(root.data);
+		display_inorder_recursion(root.right);
+	}
+	private static void display_inorder_iterative(TreeNode root) {
+		if(root==null) {
+			return;
+		}
+		TreeNode current = root;
+		ArrayList<Integer> al =new ArrayList<Integer>();
+		Stack<TreeNode> s = new Stack<TreeNode>();
+		
+		while(current!=null||!s.isEmpty()) {
+			while(current!=null) {
+				s.push(current);
+				current=current.left;
+			}
+			TreeNode temp=s.pop();
+			al.add(temp.data);
+			current=temp.right;
+		}
+		for(int i=0;i<al.size();i++) {
+			System.out.println(al.get(i));
+		}
+	}
+	private static void display_preorder_recursion(TreeNode root) {
+		if(root==null) {
+			return;
+		}
+		System.out.println(root.data);
+		display_preorder_recursion(root.left);
+		display_preorder_recursion(root.right);
+		
+	}
+	private static void display_preorder_iterative(TreeNode root) {
+		if(root==null) {
+			return;
+		}
+		TreeNode current = root;
+		ArrayList<Integer> al =new ArrayList<Integer>();
+		Stack<TreeNode> s = new Stack<TreeNode>();
+		
+		while(current!=null||!s.isEmpty()) {
+			while(current!=null) {
+				s.push(current);
+				al.add(current.data);
+				current=current.left;
+			}
+			TreeNode temp=s.pop();
+			
+			current=temp.right;
+		}
+		for(int i=0;i<al.size();i++) {
+			System.out.println(al.get(i));
+		}
+	}
+	private static void display_postorder_recursion(TreeNode root) {
+		if(root==null) {
+			return;
+		}
+		display_postorder_recursion(root.left);
+		display_postorder_recursion(root.right);
+		System.out.println(root.data);
+		
+	}
+	private static void display_postorder_iterative(TreeNode root) {
+		if(root==null) {
+			return;
+		}
+		TreeNode current = root;
+		ArrayList<Integer> al =new ArrayList<Integer>();
+		Stack<TreeNode> s1 = new Stack<TreeNode>();
+		Stack<TreeNode> s2 = new Stack<TreeNode>();
+		s1.push(current);
+		while(!s1.isEmpty()) {
+			TreeNode temp = s1.pop();
+			s2.push(temp);
+			if(temp.left!=null) {
+				s1.push(temp.left);
+			}
+			if(temp.right!=null) {
+				s1.push(temp.right);
+			}
+			
+		}
+		while(!s2.isEmpty()) {
+			al.add(s2.pop().data);
+		}
+		
+		for(int i=0;i<al.size();i++) {
+			System.out.println(al.get(i));
+		}
+		
+	}
+}
