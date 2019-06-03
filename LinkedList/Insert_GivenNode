@@ -1,0 +1,58 @@
+package LinkedList;
+
+import java.util.Scanner;
+
+public class Insert_GivenNode {
+
+	public static Node insert(Node head,int data) {
+		Node newNode = new Node(data);
+		Node current= head;
+		if(current==null) {
+			head=newNode;
+		}
+		else {
+		while(current.next!=null) {
+			current=current.next;
+		}
+		current.next=newNode;
+		
+		}
+		return head;
+	}
+	public static void display(Node head) {
+		Node current = head;
+		while(current!=null) {
+			System.out.println(current.data);
+			current=current.next;
+		}
+		
+	}
+	
+	private static Node insert_GivenNode(Node head, int num, int data) {
+		Node newNode = new Node (data);
+		Node current = head;
+		while(current.data!=num) {
+			current= current.next;
+		}
+		newNode.next=current.next;
+		current.next=newNode;
+		return head;
+	}
+	
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n= sc.nextInt();
+		Node head=null;
+		for(int i=0;i<n;i++) {
+			int data= sc.nextInt();
+			head=insert(head,data);
+		}
+		System.out.println("Enter a NodeValue to insert after a Node");
+		int data=sc.nextInt();
+		int num= sc.nextInt();
+		head=insert_GivenNode(head,data,num);
+		display(head);
+
+	}
+}
