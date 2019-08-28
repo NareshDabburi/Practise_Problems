@@ -1,0 +1,109 @@
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Stack;
+
+class Node{
+	int data;
+	Node left;
+	Node right;
+ 
+	Node(int data){
+		this.data=data;
+		this.left=null;
+		this.right=null;
+	}
+}
+public class spiral_traversal {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n= sc.nextInt();
+		Node root=null;
+		for(int i=0;i<n;i++) {
+			int data=sc.nextInt();
+			root=insert(root,data);
+		}
+		spiral(root);
+		System.out.print("Inorder Traversal = ");
+		display(root);
+
+	}
+	
+	
+	
+	private static void spiral(Node root) {
+		if(root==null) {
+			return;
+		}
+		Node current = root;
+		Stack<Node> s1 = new Stack<Node>();
+		Stack<Node> s2 = new Stack<Node>();
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		s1.push(root);
+		
+		while(!s1.isEmpty() || !s2.isEmpty()) {
+			while(!s1.isEmpty()) {
+				Node temp = s1.pop();
+				list.add(temp.data);
+				if(temp.right!=null) {
+					s2.push(temp.right);
+				}
+				if(temp.left!=null) {
+					s2.push(temp.left);
+				}
+			}
+			
+			while(!s2.isEmpty()) {
+				Node temp = s2.pop();
+				list.add(temp.data);
+				if(temp.left!=null) {
+					s1.push(temp.left);
+				}
+				if(temp.right!=null) {
+					s1.push(temp.right);
+				}
+			}
+		}
+		System.out.println("Spiral List = "+ list);
+		
+	}
+
+
+
+	private static Node insert(Node root,int data) {
+		Node current = root;
+		Node newNode = new Node(data);
+		if(root==null) {
+			return newNode;
+		}
+		Node temp=null;
+		while(current!=null) {
+			temp=current;
+			if(current.data<data) {
+				current=current.right;
+			}else if(current.data>data) {
+				current=current.left;
+			}
+		}
+ 
+		if(temp.data<data) {
+			temp.right=newNode;
+		}
+		else if(temp.data>data) {
+			temp.left=newNode;
+		}
+		return root;
+	}
+ 
+	private static void display(Node root) {
+		if(root==null) {
+			return;
+		}
+		display(root.left);
+		System.out.print(root.data+" ");
+		display(root.right);
+	}
+
+}
