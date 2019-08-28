@@ -1,0 +1,94 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Stack;
+
+public class all_ancestors_of_given_node {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n= sc.nextInt();
+		Node root=null;
+		for(int i=0;i<n;i++) {
+			int data=sc.nextInt();
+			root=insert(root,data);
+		}
+		int key1=sc.nextInt();
+		ArrayList<Integer> list = ancestors(root,key1);
+		
+		System.out.print("Inorder Traversal = ");
+		display(root);
+
+	}
+	
+	private static ArrayList<Integer> ancestors(Node root, int key1) {
+		if(root==null) {
+			return null;
+		}
+		Stack<Node> s = new Stack<Node>();
+		while(true) {
+			
+			while(root!=null && root.data!=key1) {
+				s.push(root);
+				root=root.left;
+			}
+			
+			if(root!=null && root.data==key1) {
+				break;
+			}
+			
+			
+			 if (s.peek().right == null) 
+		        { 
+		            root = s.pop(); 
+		            while (!s.isEmpty() && s.peek().right == root) 
+		               root = s.pop(); 
+		        } 
+			
+			
+			 root = s.empty() ? null : s.peek().right;
+			
+		}
+		
+		while(!s.isEmpty()) {
+			System.out.print(s.pop().data+" ");
+		}
+		
+		return null;
+	}
+
+	private static Node insert(Node root,int data) {
+		Node current = root;
+		Node newNode = new Node(data);
+		if(root==null) {
+			return newNode;
+		}
+		Node temp=null;
+		while(current!=null) {
+			temp=current;
+			if(current.data<data) {
+				current=current.right;
+			}else if(current.data>data) {
+				current=current.left;
+			}
+		}
+ 
+		if(temp.data<data) {
+			temp.right=newNode;
+		}
+		else if(temp.data>data) {
+			temp.left=newNode;
+		}
+		return root;
+	}
+ 
+	private static void display(Node root) {
+		if(root==null) {
+			return;
+		}
+		display(root.left);
+		System.out.print(root.data+" ");
+		display(root.right);
+	}
+
+
+}
