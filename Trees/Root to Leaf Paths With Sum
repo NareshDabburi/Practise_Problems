@@ -1,0 +1,72 @@
+/*
+Given a binary tree and a sum, find all root-to-leaf paths where each path’s sum equals the given sum.
+
+For example:
+Given the below binary tree and sum = 22,
+              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \    / \
+        7    2  5   1
+        
+ return
+
+[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+
+*/
+
+
+
+
+**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) {
+ *      val = x;
+ *      left=null;
+ *      right=null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int B) {
+        Stack<TreeNode> s = new Stack<TreeNode>();
+        ArrayList<ArrayList<Integer>> al= new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> al1 = new ArrayList<Integer>();
+        int sum=0;
+        helperFunc(root,B,sum,al1,al);
+        return al;
+    }
+    
+    public static void helperFunc(TreeNode root,int B,int sum,ArrayList<Integer> al1,ArrayList<ArrayList<Integer>> al){
+        if(root==null){
+            return ;
+        }
+        sum+=root.val;
+        al1.add(root.val);
+        
+        if(sum==B && root.left==null && root.right==null){
+            ArrayList<Integer> al2 = new ArrayList<Integer>();
+            for(int i=0;i<al1.size();i++){
+                al2.add(al1.get(i));
+            }
+            al.add(al2);
+        }
+        if(root.left!=null){
+            helperFunc(root.left,B,sum,al1,al);
+        }
+        if(root.right!=null){
+            helperFunc(root.right,B,sum,al1,al);
+        }
+        
+        al1.remove(al1.size()-1);
+    }
+}
