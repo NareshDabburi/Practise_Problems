@@ -1,0 +1,95 @@
+/*
+Given a binary tree, write a function that returns true if the tree satisfies below property.
+For every node, data value must be equal to sum of data values in left and right children.
+Consider data value as 0 for NULL children. 
+Below tree is an example
+
+		   10
+           / \
+         4    6
+        / \  / \
+       2  2 3  3
+ */
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class child_sum_property {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n= sc.nextInt();
+		Node root=null;
+		for(int i=0;i<n;i++) {
+			int data=sc.nextInt();
+			root=insert(root,data);
+		}
+		//isChild(root);
+		System.out.println();
+		System.out.print("Inorder Traversal After = ");
+		display(root);
+
+	}
+
+	private static void isChild(Node root) {
+		boolean flag=true;
+		Queue<Node> q = new LinkedList<Node>();
+		q.offer(root);
+		while(!q.isEmpty()) {
+			Node temp=q.poll();
+			int a=0,b=0;
+			if(temp.left!=null) {
+				q.offer(temp.left);
+				a=temp.left.data;
+			}
+			if(temp.right!=null) {
+				q.offer(temp.right);
+				b=temp.right.data;
+			}
+			if(temp.right!=null || temp.left!=null) {
+				if(temp.data != (a+b)) {
+					flag=false;
+					break;
+				}
+			}
+		}
+		System.out.println(flag);
+		
+	}
+
+	private static Node insert(Node root,int data) {
+		Node current = root;
+		Node newNode = new Node(data);
+		if(root==null) {
+			return newNode;
+		}
+		Node temp=null;
+		while(current!=null) {
+			temp=current;
+			if(current.data<=data) {
+				current=current.right;
+			}else if(current.data>data) {
+				current=current.left;
+			}
+		}
+ 
+		if(temp.data<data) {
+			temp.right=newNode;
+		}
+		else if(temp.data>data) {
+			temp.left=newNode;
+		}
+		return root;
+	}
+ 
+	private static void display(Node root) {
+		if(root==null) {
+			return;
+		}
+		display(root.left);
+		System.out.print(root.data+" ");
+		display(root.right);
+	}
+
+}
