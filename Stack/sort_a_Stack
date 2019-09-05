@@ -1,0 +1,31 @@
+package Stack;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+import java.util.Stack;
+
+public class sort_a_Stack {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		Queue<Integer> q = new LinkedList<Integer>();
+		Stack<Integer>  s= new Stack<Integer>();
+		for(int i=0;i<n;i++) {
+			int data = sc.nextInt();
+			s.push(data);
+		}
+		s=sort(s);
+}
+
+	private static Stack<Integer> sort(Stack<Integer> s) {
+		if(s.isEmpty()) {
+			return s;
+		}
+		int temp = s.pop();
+		sort(s);
+		
+		return null;
+	}
+}
