@@ -1,0 +1,82 @@
+package Stack;
+import java.util.Scanner;
+
+public class Convert_infix_to_postfix {
+	static int max=100;
+	static char stack[] = new char[max];
+	static int top=-1;
+	
+	public static void push(char x) {
+		
+		if(top>max) {
+			System.out.println("Stack Overflow");
+			System.exit(0);
+		}else {
+			stack[++top]=x;
+		}
+		
+	}
+	public static char pop() {
+		if(top==-1) {
+			System.out.println("Stack is Empty");
+			System.exit(0);
+		}
+		return stack[top--];
+	}
+	public static boolean isEmpty() {
+		if(top==-1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public static int priority(char ch) {
+		switch(ch) {
+		case '(':return 0;
+		case '+':
+		case '-': return 1;
+		case '*':
+		case '/':
+		case '%':return 2;
+		case '^':return 3;
+		default: return 0;
+		}
+		
+		//return max;
+		
+	}
+	
+	
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String str= sc.nextLine();
+		for(int i=0;i<str.length();i++) {
+			char ch = str.charAt(i);
+			switch(ch) {
+			case '(':
+				push('(');
+				break;
+			case ')':
+				char temp;
+				while((temp=pop()) != '(' ) {
+					System.out.print(temp);
+				}
+				break;
+			case '+':
+			case '-':
+			case '*':
+			case '/':
+			case '%':
+			case '^':
+				while(!isEmpty() &&  priority(stack[top])>= priority(ch) )
+					System.out.print(pop());
+				push(ch);
+				break;
+			default:
+				System.out.print(ch);
+			}
+		}
+	}
+}
