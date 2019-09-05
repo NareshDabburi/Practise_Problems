@@ -1,0 +1,68 @@
+package Strings;
+
+import java.util.Scanner;
+
+public class KMP {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		String txt=sc.next();
+		String pat=sc.next();
+		int len=pat.length();
+		int lca[] = new int [len];
+		compute_lca(pat,len,lca);
+		for(int i=0;i<len;i++) {
+			System.out.print(lca[i]+" ");
+		}
+		find_pattern(txt,pat,lca);
+		
+
+	}
+	
+	private static void find_pattern(String txt,String pat, int[] lca) {
+		int j=0;
+		int i=0;
+		int len=txt.length();
+		while(i<len) {
+			if(txt.charAt(i)==pat.charAt(j)) {
+				i++;
+				j++;
+			}
+			 if (j== pat.length()) {
+				 	System.out.println();
+	                System.out.print("Found pattern "
+	                                   + "at index " + (i - (j))); 
+	                j = lca[j-1]; 
+	            } 
+			 else if (i < len && pat.charAt(j) != txt.charAt(i)) { 
+	                if (j != 0) 
+	                    j = lca[j-1]; 
+	                else {
+	                	j=0;
+	                	i = i + 1;
+	                }
+	            } 
+		}
+	}
+
+	private static void compute_lca(String str, int len,int [] lca) {
+		int i=1,j=0;
+		lca[0]=0;
+		while(i<len) {
+			if(str.charAt(i)==str.charAt(j)) {
+				j++;
+				lca[i]=j;
+				i++;
+			}else {
+				if(j!=0) {
+					j=lca[j-1];
+				}else {
+					lca[i]=0;
+					i++;
+				}
+			}
+		}
+		
+	}
+
+}
