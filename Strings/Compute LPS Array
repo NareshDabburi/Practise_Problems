@@ -1,0 +1,40 @@
+package Strings;
+
+import java.util.Scanner;
+
+public class LPS {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		String str=sc.next();
+		int len=str.length();
+		int lca[] = new int [len];
+		compute_lca(str,len,lca);
+		for(int i=0;i<len;i++) {
+			System.out.print(lca[i]+" ");
+		}
+		
+
+	}
+
+	private static void compute_lca(String str, int len,int [] lca) {
+		int i=1,j=0;
+		lca[0]=0;
+		while(i<len) {
+			if(str.charAt(i)==str.charAt(j)) {
+				j++;
+				lca[i]=j;
+				i++;
+			}else {
+				if(j!=0) {
+					j=lca[j-1];
+				}else {
+					lca[i]=0;
+					i++;
+				}
+			}
+		}
+		
+	}
+
+}
