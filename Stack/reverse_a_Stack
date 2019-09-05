@@ -1,0 +1,46 @@
+package Stack;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class reverse_a_Stack {
+	static Stack<Integer>  s= new Stack<Integer>();
+	static Stack<Integer>  s1= new Stack<Integer>();
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		
+		for(int i=0;i<n;i++) {
+			int data = sc.nextInt();
+			s.push(data);
+		}
+		System.out.println(s);
+		reverse();
+		System.out.println(s1);
+		
+		/*while(!s1.isEmpty()) {
+			System.out.println(s1.pop());
+		}*/
+	}
+
+	private static void reverse() {
+		while(!s.isEmpty()) {
+			int c=s.pop();
+			reverse();
+			insert (c);
+		}
+		//return null;
+	}
+
+	private static void insert(int c) {
+		if(s1.isEmpty()) {
+			s1.push(c);
+		}else {
+			int x =s1.pop();
+			insert(c);
+			s1.push(x);
+		}
+		
+	}
+
+}
