@@ -1,0 +1,52 @@
+package Stack;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Daily_tempratures {
+
+	public static void main(String[] args) {
+Scanner sc = new Scanner (System.in);
+		
+		int t= sc.nextInt();
+		for(int i1=0;i1<t;i1++) {
+			int n = sc.nextInt();
+			int arr[] = new int [n];
+			for(int i=0;i<n;i++) {
+				arr[i]=sc.nextInt();
+			}
+			greater_temp(arr);
+		}
+
+	}
+
+	private static void greater_temp(int[] arr) {
+		Stack<Integer> s = new Stack<Integer>();
+		Stack<Integer> s1 = new Stack<Integer>();
+		int result[] = new int [arr.length];
+		s.push(arr[0]);
+		s1.push(0);
+		for(int i=1;i<arr.length;i++) {
+			while(!s.isEmpty() && arr[i]>s.peek()) {
+				int temp=s.pop();
+				int temp1=s1.pop();
+				result[temp1]=arr[i];
+				//System.out.println(temp +" "+ arr[i]+" "+temp1);
+			}
+			s.push(arr[i]);
+			s1.push(i);
+		}
+		while(!s.isEmpty()) {
+			result[s1.pop()]=-1;
+			s.pop();
+			//System.out.println(s.pop()+" "+"-1"+" "+s1.pop());
+		}
+		for(int i=0;i<result.length;i++) {
+			System.out.print(result[i]+" ");
+		}
+		
+	}
+
+	
+
+}
