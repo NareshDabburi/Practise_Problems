@@ -1,0 +1,63 @@
+//design a stack to retrieve min_Element,middle,pop the value in o(1)
+package Stack;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Stack;
+
+public class design_SpecialStack {
+	static Stack<Integer> s= new Stack<Integer>();
+	static Stack<Integer> s_min= new Stack<Integer>();
+	static ArrayList<Integer> al = new ArrayList<Integer>();
+	static int count=0;
+	public static int pop() {
+		int temp=-1;
+		if(!s.isEmpty()) {
+		temp=s.pop();
+		al.remove(al.size()-1);
+		if(!s_min.isEmpty()&&temp==s_min.peek()) {
+			s_min.pop();
+		 }
+		}
+		return temp;
+		
+	}
+	public static int find_middle() {
+		if(al.size()==0) {
+			return -1;
+		}else {
+		return al.get(al.size()/2);}
+		
+	}
+	public static int get_MinElement() {
+		if(s_min.isEmpty()) {
+			return -1;
+		}else {
+		return s_min.peek();
+		}
+		
+	}
+	public static void push(int num) {
+		s.push(num);
+		al.add(num);
+		if(s_min.isEmpty()) {
+			s_min.push(num);
+		}
+		else {
+			if(num<s_min.peek()) {
+				s_min.push(num);
+			}
+		}
+	}
+	public static void main(String [] args) {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		for(int i=0;i<n;i++) {
+			int num= sc.nextInt();
+			push(num);
+		}
+		System.out.println("Poped Element ="+ pop());
+		System.out.println("Minimum Element ="+ get_MinElement());
+		System.out.println("Middle Element ="+ find_middle() );
+	}
+}
